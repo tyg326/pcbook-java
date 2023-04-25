@@ -1,0 +1,70 @@
+plugins {
+    id "com.google.protobuf" version "0.9.2"
+    id 'java'
+}
+
+group 'com.gitlab.techschool'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.22.3'
+
+    // https://mvnrepository.com/artifact/io.grpc/grpc-all
+    implementation group: 'io.grpc', name: 'grpc-all', version: '1.54.1'
+
+    constraints {
+        implementation('commons-codec:commons-codec:1.15') {
+            because 'Cxeb68d52e-5509 3.7, need upgraded from 1.11 to 1.15'
+        }
+    }
+
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+protobuf {
+    // Configure the protoc executable
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.22.3'
+        // or local path
+        // path = '/usr/local/bin/protoc'
+    }
+
+    // Locate the codegen plugins
+    plugins {
+        // Locate a plugin with name 'grpc'. This step is optional.
+        // If you don't locate it, protoc will try to use "protoc-gen-grpc" from
+        // system search path.
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.54.1'
+            // or
+            // path = 'tools/protoc-gen-grpc-java'
+        }
+        // Any other plugins
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
