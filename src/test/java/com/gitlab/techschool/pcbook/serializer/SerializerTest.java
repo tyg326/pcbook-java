@@ -13,7 +13,7 @@ public class SerializerTest {
 
     @Test
     public void testWriteAndReadBinaryFile() throws IOException {
-        String binaryFile = "laptop.bin";
+        String binaryFile = "tmp/laptop.bin";
         Laptop laptop1 = new Generator().NewLaptop();
 
         Serializer serializer = new Serializer();

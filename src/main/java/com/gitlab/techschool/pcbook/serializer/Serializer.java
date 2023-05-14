@@ -36,8 +36,8 @@ public class Serializer {
 
     public static void main(String[] args) throws IOException {
         Serializer serializer = new Serializer();
-        Laptop laptop = serializer.ReadBinaryFile("laptop.bin");
-        serializer.WriteJSONFile(laptop, "laptop.json");
+        Laptop laptop = serializer.ReadBinaryFile("tmp/laptop.bin");
+        serializer.WriteJSONFile(laptop, "tmp/laptop.json");
     }
 
 }
